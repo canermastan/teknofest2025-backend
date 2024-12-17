@@ -1,5 +1,6 @@
 package com.teknofest.turizm.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.teknofest.turizm.model.audit.AuditAll;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,6 +21,7 @@ public class Event extends AuditAll<String> {
     private Integer id;
 
     @ManyToOne
+    @JsonProperty("user_id")
     @JoinColumn(name = "user_id")
     private User user;
     @Column
@@ -28,8 +30,9 @@ public class Event extends AuditAll<String> {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "location_id")
-    private Location location;
+    @JoinColumn(name = "place_id")
+    @JsonProperty("place_id")
+    private Place place;
 
     @Column(name = "start_time")
     private LocalDateTime startTime;
@@ -37,12 +40,12 @@ public class Event extends AuditAll<String> {
     @Column(name = "end_time")
     private LocalDateTime endTime;
 
-    public Event(Integer id, User user, String title, String description, Location location, LocalDateTime startTime, LocalDateTime endTime) {
+    public Event(Integer id, User user, String title, String description, Place place, LocalDateTime startTime, LocalDateTime endTime) {
         this.id = id;
         this.user = user;
         this.title = title;
         this.description = description;
-        this.location = location;
+        this.place = place;
         this.startTime = startTime;
         this.endTime = endTime;
     }
@@ -82,12 +85,13 @@ public class Event extends AuditAll<String> {
         this.description = description;
     }
 
-    public Location getLocation() {
-        return location;
+    public Place getPlace() {
+        return place;
+
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setPlace(Place place) {
+        this.place=place;
     }
 
     public LocalDateTime getStartTime() {
